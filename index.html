@@ -1,0 +1,2068 @@
+<!-- Links -->
+<link rel='stylesheet' type='text/css' href='dashboard.css' />
+<link rel='stylesheet' type='text/css' href='index.css' />
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="plugins/hammer.min.js"></script>
+<script src="plugins/chartjs-plugin-zoom.js"></script>
+<script type="text/javascript" src="sales.json"></script>
+<script type="text/javascript" src="attendance.json"></script>
+
+<div id='header'>
+  <div class='content shadow radius-bottom'>
+    <div class='padded'>
+      <div class='outline'>
+        <div class='logo-nav'>
+          <div class='logo-nav'>
+            <h1 id='logo'>
+                <a href='https://cfmatl.org/'><img src='images/logo.png'>
+            </h1>
+          </div>
+          <nav id='navigation'>
+            <ul class='menu sf-arrows'>
+              <li>
+                <a class='sf-with-ul' onclick='displayDashboard()' href='index.html#dashboard'>Dashboard</a>
+              </li>
+              <li>
+                <a class='sf-with-ul' href='index.html'>Graphs</a>
+              </li>
+              <li>
+                <a class='sf-with-ul' href='data-upload.html'>Upload Data</a>
+              </li>
+              <li>
+                <a class='sf-with-ul' href='support.html'>Support</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='footer-graphs'>
+  <div class='content shadow radius-top'>
+    <div class='padded'>
+      <div class='outline'>
+        <div class='row'>
+          <div class='filter'>
+            <div class='filter-title'>
+              <span>Filter</span>
+              <button id='filter-clear' onclick='clearAll()'><span><u>Clear All</u></span></button>
+            </div>
+            <div class='filter-row'>
+              <span>Data Type</span>
+            </div>
+            <div class='expanded'>
+                <span id='checkbox'><input type='radio' name='data-type' value='sales'>Sales</span>
+                <span id='checkbox'><input type='radio' name ='data-type' value='attendance'>Attendance</span>
+            </div>
+            <div class='filter-row'>
+                <span>Market</span>
+            </div>
+            <div class='expanded markets'>
+                <span id='checkbox'><input type='radio' name='market' value='pcfm'>PCFM</span>
+                <span id='checkbox'><input type='radio' name='market' value='eav'>EAV</span>
+                <span id='checkbox'><input type='radio' name='market' value='dfm'>DFM</span>
+                <span id='checkbox' class='next-line'><input type='radio' name='market' value='gpfm'>GPFM</span>
+            </div>
+          </div>
+          <div class='graphs'>
+              <div id='all-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="allSales" data-category='sales' width='300' height="150"></canvas>
+              </div>
+              <div id='sales-market' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="salesMarket" data-category='sales' width='300' height="150"></canvas>
+              </div>
+              <div id='sales-vendor' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="salesVendor" data-category='sales' width='300' height="150"></canvas>
+              </div>
+              <div id='pcfm-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="pcfmSales" data-category='sales pcfm' width='300' height="150"></canvas>
+              </div>
+              <div id='eav-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="eavSales" data-category='sales eav' width='300' height="150"></canvas>
+              </div>
+              <div id='dfm-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="dfmSales" data-category='sales dfm' width='300' height="150"></canvas>
+              </div>
+              <div id='gpfm-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="gpfmSales" data-category='sales gpfm' width='300' height="150"></canvas>
+              </div>
+              <div id='pcfm-vendor' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="pcfmVendor" data-category='sales pcfm' width='300' height="150"></canvas>
+              </div>
+              <div id='eav-vendor' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="eavVendor" data-category='sales eav' width='300' height="150"></canvas>
+              </div>
+              <div id='dfm-vendor' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="dfmVendor" data-category='sales dfm' width='300' height="150"></canvas>
+              </div>
+              <div id='gpfm-vendor' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="gpfmVendor" data-category='sales gpfm' width='300' height="150"></canvas>
+              </div>
+              <div id='precip-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="precipSales" data-category='sales' width='300' height="150"></canvas>
+              </div>
+              <div id='temp-sales' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="tempSales" data-category='sales' width='300' height="150"></canvas>
+              </div>
+              <div id='all-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="allAttendance" data-category='attendance' width='300' height="150"></canvas> 
+              </div>
+              <div id='attendance-market' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="attendanceMarket" data-category='attendance' width='300' height="150"></canvas>
+              </div>
+              <div id='pcfm-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="pcfmAttendance" data-category='attendance pcfm' width='300' height="150"></canvas>
+              </div>
+              <div id='eav-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="eavAttendance" data-category='attendance eav' width='300' height="150"></canvas>
+              </div>
+              <div id='dfm-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="dfmAttendance" data-category='attendance dfm' width='300' height="150"></canvas>
+              </div>
+              <div id='gpfm-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="gpfmAttendance" data-category='attendance gpfm' width='300' height="150"></canvas>
+              </div>
+              <div id='precip-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="precipAttendance" data-category='attendance' width='300' height="150"></canvas>
+              </div>
+              <div id='temp-attendance' class='graph-div'>
+                  <div class='add-icon' onclick='addToDash(event)'></div>
+                  <canvas id="tempAttendance" data-category='attendance' width='300' height="150"></canvas>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="added-snackbar">Added to Dashboard</div>
+<div id="removed-snackbar">Removed From Dashboard</div>
+
+<div id='footer-dash'>
+  <div class='content shadow radius-top'>
+    <div class='padded'>
+      <div class='outline'>
+        <div class='row'>
+          <div class='dashboard'>
+              <div class='empty'>
+                <button type='button' class='primary-action' onclick='location.href="index.html"'>Add Graphs</button>
+                </br>It looks like your dashboard is empty. Get started by navigating to the "Graphs" page and 
+                adding your first graph. Once you do, it will be displayed on this page.
+              </div>
+              <div id='all-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='sales-market1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='sales-vendor1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='pcfm-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='eav-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='dfm-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='gpfm-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='pcfm-vendor1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='eav-vendor1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='dfm-vendor1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='gpfm-vendor1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='precip-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='temp-sales1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='all-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='attendance-market1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='pcfm-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='eav-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='dfm-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='gpfm-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='precip-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+              <div id='temp-attendance1' class='dash-div'>
+                  <div class='remove-icon' onclick='removeFromDash(event)'></div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+  /////////////////Dashboard Code/////////////////
+
+  //Load correct page based off hash
+  if (window.location.hash == '#dashboard') {
+    displayDashboard();
+  } else {
+      document.getElementById('footer-dash').style.display = 'none';
+      document.getElementById('footer-graphs').style.display = 'flex';
+      if (localStorage.getItem('dashboardGraphs') !== null && localStorage.getItem('dashboardGraphs') !== '' && localStorage.getItem('dashboardGraphs') !== '[]') {
+        var graphs = JSON.parse(localStorage.getItem('dashboardGraphs'));
+        for (var i = 0; i < graphs.length; i++) {
+          document.getElementById(graphs[i].name).appendChild($('#' + graphs[i].name.replace(/(-.)/g,function(x){return x[1].toUpperCase()}))[0]);
+        }
+      }
+  }
+  function displayDashboard() {
+    document.getElementById('footer-graphs').style.display = 'none';
+    document.getElementById('footer-dash').style.display = 'flex';
+
+    //Parse Dashboard JSON
+    if (localStorage.getItem('dashboardGraphs') !== null && localStorage.getItem('dashboardGraphs') !== '' && localStorage.getItem('dashboardGraphs') !== '[]') {
+      var graphs = JSON.parse(localStorage.getItem('dashboardGraphs'));
+      for (var i = 0; i < graphs.length; i++) {
+        document.getElementById(graphs[i].name + '1').appendChild($('#' + graphs[i].name.replace(/(-.)/g,function(x){return x[1].toUpperCase()}))[0]);
+        document.getElementById(graphs[i].name + '1').style.display = 'inline-block';
+      }
+    } else {
+      document.getElementsByClassName('empty')[0].style.display = 'block';
+    }
+  }
+
+  /////////////////Graphs Code/////////////////
+
+  function addToDash(event) {
+    var newGraph = {
+      name: event.target.parentElement.id
+    };
+    if (localStorage.getItem('dashboardGraphs') == null) {
+      localStorage.setItem('dashboardGraphs', JSON.stringify([newGraph], null, '\t'));
+    } else {
+      var temp = JSON.parse(localStorage.getItem('dashboardGraphs'));
+      temp.push(newGraph);
+      localStorage.setItem('dashboardGraphs', JSON.stringify(temp, null, '\t'));
+    }
+    console.log(localStorage.getItem('dashboardGraphs'));
+
+    var x = document.getElementById('added-snackbar');
+    x.className = 'show';
+    setTimeout(function() { x.className = x.className.replace('show', ''); }, 3000);
+  }
+
+  function removeFromDash(event) {
+    var temp = JSON.parse(localStorage.getItem('dashboardGraphs')).filter(function(obj) { return obj.name !== event.target.parentElement.id.replace(/[0-9]/g, '')}); 
+    localStorage.setItem('dashboardGraphs', JSON.stringify(temp));
+    document.getElementById(event.target.parentElement.id).style.display = 'none';
+    
+    if (localStorage.getItem('dashboardGraphs') == null || localStorage.getItem('dashboardGraphs') == '' || localStorage.getItem('dashboardGraphs') == '[]') {
+      document.getElementsByClassName('empty')[0].style.display = 'block';
+    }
+
+    var x = document.getElementById("removed-snackbar");
+    x.className = 'show';
+    setTimeout(function() { x.className = x.className.replace('show', ''); }, 3000);
+  }
+
+  //Parse Sales JSON
+  $.getJSON('sales.json', function (data) {
+    //Instantiate x and y arrays for charts
+    var allSalesX = [];
+    var allSalesY = [];
+    var PCFMsalesX = [];
+    var PCFMsalesY = [];
+    var EAVsalesX = [];
+    var EAVsalesY = [];
+    var DFMsalesX = [];
+    var DFMsalesY = [];
+    var GPFMsalesX = [];
+    var GPFMsalesY = [];
+    var salesMarketX = ['PCFM', 'EAV', 'DFM-W', 'DFM-S', 'GPFM'];
+    var salesMarketY = [0, 0, 0, 0, 0];
+    var salesVendorX = ['Non-Food Vendor', ['Packaged, Processed, and', 'Prepared Food Vendor'], "Farmer"];
+    var salesVendorY = [0, 0, 0];
+    var PCFMvendorY = [0, 0, 0];
+    var EAVvendorY = [0, 0, 0];
+    var DFMvendorY = [0, 0, 0];
+    var GPFMvendorY = [0, 0, 0];
+    var precipSalesX = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+    var precipSalesY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var tempSalesX = [35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+    var tempSalesY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var date = '5/8/18';
+    var sales = [];
+    var PCFMdate = '5/8/18';
+    var PCFMsales = [];
+    var EAVdate = '5/8/18';
+    var EAVsales = [];
+    var DFMdate = '5/8/18';
+    var DFMsales = [];
+    var GPFMdate = '5/8/18';
+    var GPFMsales = [];
+
+    if (localStorage.getItem('salesData') == null) {
+      localStorage.setItem('salesData', JSON.stringify(data, null, '\t'));
+    }
+    var salesData = JSON.parse(localStorage.getItem('salesData'));
+    for (var i = 0; i < salesData.length; i++) {
+      if (salesData[i].date !== date) {
+        //All Sales
+        allSalesX.push(new Date(date));
+        var rounded = Math.round(sales.reduce(function add(a, b) { return a + b }, 0));
+        allSalesY.push(rounded);
+        sales = [];
+        date = salesData[i].date;
+      }
+      sales.push(salesData[i].sales);
+      //Market-specific Sales
+      if (salesData[i].market == 'PCFM') {
+        if (salesData[i].date !== PCFMdate) {
+          PCFMsalesX.push(new Date(PCFMdate));
+          var rounded = Math.round(PCFMsales.reduce(function add(a, b) { return a + b }, 0));
+          PCFMsalesY.push(rounded);
+          PCFMsales = [];
+          PCFMdate = salesData[i].date;
+        }
+        PCFMsales.push(salesData[i].sales);
+      } else if (salesData[i].market == 'EAV') {
+        if (salesData[i].date !== EAVdate) {
+          EAVsalesX.push(new Date(EAVdate));
+          var rounded = Math.round(EAVsales.reduce(function add(a, b) { return a + b }, 0));
+          EAVsalesY.push(rounded);
+          EAVsales = [];
+          EAVdate = salesData[i].date;
+        }
+        EAVsales.push(salesData[i].sales);
+      } else if (salesData[i].market == 'DFM-W' || salesData[i].market == 'DFM-S') {
+        if (salesData[i].date !== DFMdate) {
+          DFMsalesX.push(new Date(DFMdate));
+          var rounded = Math.round(DFMsales.reduce(function add(a, b) { return a + b }, 0));
+          DFMsalesY.push(rounded);
+          DFMsales = [];
+          DFMdate = salesData[i].date;
+        }
+        DFMsales.push(salesData[i].sales);
+      } else if (salesData[i].market == 'GPFM') {
+        if (salesData[i].date !== GPFMdate) {
+          GPFMsalesX.push(new Date(GPFMdate));
+          var rounded = Math.round(GPFMsales.reduce(function add(a, b) { return a + b }, 0));
+          GPFMsalesY.push(rounded);
+          GPFMsales = [];
+          GPFMdate = salesData[i].date;
+        }
+        GPFMsales.push(salesData[i].sales);
+      }
+      //Sales per Market
+      if (salesData[i].market == 'PCFM') {
+        salesMarketY[0] += salesData[i].sales;
+      } else if (salesData[i].market == 'EAV') {
+        salesMarketY[1] += salesData[i].sales;
+      } else if (salesData[i].market == 'DFM-W') {
+        salesMarketY[2] += salesData[i].sales;
+      } else if (salesData[i].market == 'DFM-S') {
+        salesMarketY[3] += salesData[i].sales;
+      } else if (salesData[i].market == 'GPFM') {
+        salesMarketY[4] += salesData[i].sales;
+      }
+      //Sales per Vendor Category
+      if (salesData[i].vendorCategory == 'Non-Food Vendors' || salesData[i].vendorCategory == 'Non-Food Vendor') {
+        salesVendorY[0] += salesData[i].sales;
+      } else if (salesData[i].vendorCategory == 'Packaged, Processed and Prepared Food Vendor') {
+        salesVendorY[1] += salesData[i].sales;
+      } else if (salesData[i].vendorCategory == 'Farmer') {
+        salesVendorY[2] += salesData[i].sales;
+      }
+      //PCFM Sales per Vendor Category
+      if (salesData[i].market == 'PCFM') {
+        if (salesData[i].vendorCategory == 'Non-Food Vendors' || salesData[i].vendorCategory == 'Non-Food Vendor') {
+          PCFMvendorY[0] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Packaged, Processed and Prepared Food Vendor') {
+          PCFMvendorY[1] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Farmer') {
+          PCFMvendorY[2] += salesData[i].sales;
+        }
+      }
+      //EAV Sales per Vendor Category
+      if (salesData[i].market == 'EAV') {
+        if (salesData[i].vendorCategory == 'Non-Food Vendors' || salesData[i].vendorCategory == 'Non-Food Vendor') {
+          EAVvendorY[0] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Packaged, Processed and Prepared Food Vendor') {
+          EAVvendorY[1] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Farmer') {
+          EAVvendorY[2] += salesData[i].sales;
+        }
+      }
+      //DFM Sales per Vendor Category
+      if (salesData[i].market == 'DFM-S' || salesData[i].market == 'DFM-W') {
+        if (salesData[i].vendorCategory == 'Non-Food Vendors' || salesData[i].vendorCategory == 'Non-Food Vendor') {
+          DFMvendorY[0] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Packaged, Processed and Prepared Food Vendor') {
+          DFMvendorY[1] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Farmer') {
+          DFMvendorY[2] += salesData[i].sales;
+        }
+      }
+      //GPFM Sales per Vendor Category
+      if (salesData[i].market == 'GPFM') {
+        if (salesData[i].vendorCategory == 'Non-Food Vendors' || salesData[i].vendorCategory == 'Non-Food Vendor') {
+          GPFMvendorY[0] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Packaged, Processed and Prepared Food Vendor') {
+          GPFMvendorY[1] += salesData[i].sales;
+        } else if (salesData[i].vendorCategory == 'Farmer') {
+          GPFMvendorY[2] += salesData[i].sales;
+        }
+      }
+      //Precipitation
+      if ((Math.round(salesData[i].precip * 10) / 10) == 0) {
+        precipSalesY[0] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.1) {
+        precipSalesY[1] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.2) {
+        precipSalesY[2] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.3) {
+        precipSalesY[3] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.4) {
+        precipSalesY[4] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.5) {
+        precipSalesY[5] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.6) {
+        precipSalesY[6] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.7) {
+        precipSalesY[7] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.8) {
+        precipSalesY[8] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 0.9) {
+        precipSalesY[9] += salesData[i].sales;
+      } else if ((Math.round(salesData[i].precip * 10) / 10) == 1) {
+        precipSalesY[10] += salesData[i].sales;
+      }
+      //Temperature
+      if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 35) {
+        tempSalesY[0] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 40) {
+        tempSalesY[1] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 45) {
+        tempSalesY[2] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 50) {
+        tempSalesY[3] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 55) {
+        tempSalesY[4] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 60) {
+        tempSalesY[5] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 65) {
+        tempSalesY[6] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 70) {
+        tempSalesY[7] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 75) {
+        tempSalesY[8] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 80) {
+        tempSalesY[9] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 85) {
+        tempSalesY[10] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 90) {
+        tempSalesY[10] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 95) {
+        tempSalesY[10] += salesData[i].sales;
+      } else if (Math.round((Math.round(salesData[i].high - 2)) / 5) * 5 == 100) {
+        tempSalesY[10] += salesData[i].sales;
+      }
+    }
+    allSalesX.push(new Date(date));
+    allSalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
+    PCFMsalesX.push(new Date(PCFMdate));
+    PCFMsalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
+    EAVsalesX.push(new Date(EAVdate));
+    EAVsalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
+    DFMsalesX.push(new Date(DFMdate));
+    DFMsalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
+    GPFMsalesX.push(new Date(GPFMdate));
+    GPFMsalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
+    //Round datapoints to nearest integer
+    for (var i = 0; i < salesMarketY.length; i++) {
+      var rounded = Math.round(salesMarketY[i]);
+      salesMarketY[i] = rounded;
+    }
+    for (var i = 0; i < salesVendorY.length; i++) {
+      var rounded = Math.round(salesVendorY[i]);
+      salesVendorY[i] = rounded;
+    }
+    for (var i = 0; i < PCFMvendorY.length; i++) {
+      var rounded = Math.round(PCFMvendorY[i]);
+      PCFMvendorY[i] = rounded;
+    }
+    for (var i = 0; i < EAVvendorY.length; i++) {
+      var rounded = Math.round(EAVvendorY[i]);
+      EAVvendorY[i] = rounded;
+    }
+    for (var i = 0; i < DFMvendorY.length; i++) {
+      var rounded = Math.round(DFMvendorY[i]);
+      DFMvendorY[i] = rounded;
+    }
+    for (var i = 0; i < GPFMvendorY.length; i++) {
+      var rounded = Math.round(GPFMvendorY[i]);
+      GPFMvendorY[i] = rounded;
+    }
+    for (var i = 0; i < precipSalesY.length; i++) {
+      var rounded = Math.round(precipSalesY[i]);
+      precipSalesY[i] = rounded;
+    }
+    for (var i = 0; i < tempSalesY.length; i++) {
+      var rounded = Math.round(tempSalesY[i]);
+      tempSalesY[i] = rounded;
+    }
+
+    //Create All Sales Graph
+    var ctx = document.getElementById('allSales');
+    var allSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: allSalesX,
+        datasets: [{
+          fill: false,
+          data: allSalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Overall Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create Sales per Market Graph
+    var ctx = document.getElementById('salesMarket');
+    var salesMarket = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salesMarketX,
+        datasets: [{
+          fill: false,
+          data: salesMarketY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Sales Per Market',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create Sales per Vendor Category Graph
+    var ctx = document.getElementById('salesVendor');
+    var salesVendor = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salesVendorX,
+        datasets: [{
+          fill: false,
+          data: salesVendorY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Sales Per Vendor Category',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif',
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create PCFM Sales per Vendor Category Graph
+    var ctx = document.getElementById('pcfmVendor');
+    var pcfmVendor = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salesVendorX,
+        datasets: [{
+          fill: false,
+          data: PCFMvendorY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Ponce City Sales Per Vendor Category',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif',
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create EAV Sales per Vendor Category Graph
+    var ctx = document.getElementById('eavVendor');
+    var eavVendor = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salesVendorX,
+        datasets: [{
+          fill: false,
+          data: EAVvendorY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'East Atlanta Village Sales Per Vendor Category',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif',
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create DFM Sales per Vendor Category Graph
+    var ctx = document.getElementById('dfmVendor');
+    var dfmVendor = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salesVendorX,
+        datasets: [{
+          fill: false,
+          data: DFMvendorY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Decatur Sales Per Vendor Category',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif',
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create GPFM Sales per Vendor Category Graph
+    var ctx = document.getElementById('gpfmVendor');
+    var gpfmVendor = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salesVendorX,
+        datasets: [{
+          fill: false,
+          data: GPFMvendorY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Grant Park Sales Per Vendor Category',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif',
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create PCFM Sales Graph
+    var ctx = document.getElementById('pcfmSales');
+    var pcfmSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: PCFMsalesX,
+        datasets: [{
+          fill: false,
+          data: PCFMsalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Ponce City Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create EAV Sales Graph
+    var ctx = document.getElementById('eavSales');
+    var eavSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: EAVsalesX,
+        datasets: [{
+          fill: false,
+          data: EAVsalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'East Atlanta Village Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create DFM Sales Graph
+    var ctx = document.getElementById('dfmSales');
+    var dfmSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: DFMsalesX,
+        datasets: [{
+          fill: false,
+          data: DFMsalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Decatur Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create GPFM Sales Graph
+    var ctx = document.getElementById('gpfmSales');
+    var gpfmSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: GPFMsalesX,
+        datasets: [{
+          fill: false,
+          data: GPFMsalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Grant Park Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create Precipitation vs. Sales Graph
+    var ctx = document.getElementById('precipSales');
+    var precipSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: precipSalesX,
+        datasets: [{
+          fill: false,
+          data: precipSalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Precipitation Probability vs. Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create Temperature vs. Sales Graph
+    var ctx = document.getElementById('tempSales');
+    var tempSales = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: tempSalesX,
+        datasets: [{
+          fill: false,
+          data: tempSalesY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Temperature vs. Sales',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+  });
+
+  //Parse Attendance JSON
+  $.getJSON('attendance.json', function (data) {
+    //Instantiate x and y arrays for charts
+    var allAttendanceX = [];
+    var allAttendanceY = [];
+    var PCFMattendanceX = [];
+    var PCFMattendanceY = [];
+    var EAVattendanceX = [];
+    var EAVattendanceY = [];
+    var DFMattendanceX = [];
+    var DFMattendanceY = [];
+    var GPFMattendanceX = [];
+    var GPFMattendanceY = [];
+    var attendanceMarketX = ['PCFM', 'EAV', 'DFM-W', 'DFM-S', 'GPFM'];
+    var attendanceMarketY = [0, 0, 0, 0, 0];
+    var precipAttendanceX = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+    var precipAttendanceY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var tempAttendanceX = [35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+    var tempAttendanceY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var date = '5/15/11';
+    var attendance = [];
+    var PCFMdate = '5/15/11';
+    var PCFMattendance = [];
+    var EAVdate = '5/15/11';
+    var EAVattendance = [];
+    var DFMdate = '5/15/11';
+    var DFMattendance = [];
+    var GPFMdate = '5/15/11';
+    var GPFMattendance = [];
+
+    if (localStorage.getItem('attendanceData') == null) {
+      localStorage.setItem('attendanceData', JSON.stringify(data, null, '\t'));
+    }
+    var attendanceData = JSON.parse(localStorage.getItem('attendanceData'));
+    for (var i = 0; i < attendanceData.length; i++) {
+      if (attendanceData[i].date !== date) {
+        //All Attendance
+        allAttendanceX.push(new Date(date));
+        var rounded = Math.round(attendance.reduce(function add(a, b) { return a + b }, 0));
+        allAttendanceY.push(rounded);
+        attendance = [];
+        date = attendanceData[i].date;
+      }
+      attendance.push(attendanceData[i].attendance);
+      //Market-specific Attendance
+      if (attendanceData[i].market == 'PCFM') {
+        if (attendanceData[i].date !== PCFMdate) {
+          PCFMattendanceX.push(new Date(PCFMdate));
+          var rounded = Math.round(PCFMattendance.reduce(function add(a, b) { return a + b }, 0));
+          PCFMattendanceY.push(rounded);
+          PCFMattendance = [];
+          PCFMdate = attendanceData[i].date;
+        }
+        PCFMattendance.push(attendanceData[i].attendance);
+      } else if (attendanceData[i].market == 'EAV') {
+        if (attendanceData[i].date !== EAVdate) {
+          EAVattendanceX.push(new Date(EAVdate));
+          var rounded = Math.round(EAVattendance.reduce(function add(a, b) { return a + b }, 0));
+          EAVattendanceY.push(rounded);
+          EAVattendance = [];
+          EAVdate = attendanceData[i].date;
+        }
+        EAVattendance.push(attendanceData[i].attendance);
+      } else if (attendanceData[i].market == 'DFM-W' || attendanceData[i].market == 'DFM-S') {
+        if (attendanceData[i].date !== DFMdate) {
+          DFMattendanceX.push(new Date(DFMdate));
+          var rounded = Math.round(DFMattendance.reduce(function add(a, b) { return a + b }, 0));
+          DFMattendanceY.push(rounded);
+          DFMattendance = [];
+          DFMdate = attendanceData[i].date;
+        }
+        DFMattendance.push(attendanceData[i].attendance);
+      } else if (attendanceData[i].market == 'GPFM') {
+        if (attendanceData[i].date !== GPFMdate) {
+          GPFMattendanceX.push(new Date(GPFMdate));
+          var rounded = Math.round(GPFMattendance.reduce(function add(a, b) { return a + b }, 0));
+          GPFMattendanceY.push(rounded);
+          GPFMattendance = [];
+          GPFMdate = attendanceData[i].date;
+        }
+        GPFMattendance.push(attendanceData[i].attendance);
+      }
+      //Attendance per Market
+      if (attendanceData[i].market == 'PCFM') {
+        attendanceMarketY[0] += attendanceData[i].attendance;
+      } else if (attendanceData[i].market == 'EAV') {
+        attendanceMarketY[1] += attendanceData[i].attendance;
+      } else if (attendanceData[i].market == 'DFM-W') {
+        attendanceMarketY[2] += attendanceData[i].attendance;
+      } else if (attendanceData[i].market == 'DFM-S') {
+        attendanceMarketY[3] += attendanceData[i].attendance;
+      } else if (attendanceData[i].market == 'GPFM') {
+        attendanceMarketY[4] += attendanceData[i].attendance;
+      }
+      //Precipitation
+      if ((Math.round(attendanceData[i].precip * 10) / 10) == 0) {
+        precipAttendanceY[0] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.1) {
+        precipAttendanceY[1] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.2) {
+        precipAttendanceY[2] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.3) {
+        precipAttendanceY[3] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.4) {
+        precipAttendanceY[4] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.5) {
+        precipAttendanceY[5] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.6) {
+        precipAttendanceY[6] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.7) {
+        precipAttendanceY[7] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.8) {
+        precipAttendanceY[8] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 0.9) {
+        precipAttendanceY[9] += attendanceData[i].attendance;
+      } else if ((Math.round(attendanceData[i].precip * 10) / 10) == 1) {
+        precipAttendanceY[10] += attendanceData[i].attendance;
+      }
+      //Temperature
+      if (attendanceData[i].temperature !== null) {
+        if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 35) {
+          tempAttendanceY[0] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 40) {
+          tempAttendanceY[1] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 45) {
+          tempAttendanceY[2] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 50) {
+          tempAttendanceY[3] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 55) {
+          tempAttendanceY[4] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 60) {
+          tempAttendanceY[5] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 65) {
+          tempAttendanceY[6] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 70) {
+          tempAttendanceY[7] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 75) {
+          tempAttendanceY[8] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 80) {
+          tempAttendanceY[9] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 85) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 90) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 95) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].temperature)) / 5) * 5 == 100) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        }
+      } else {
+        if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 35) {
+          tempAttendanceY[0] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 40) {
+          tempAttendanceY[1] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 45) {
+          tempAttendanceY[2] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 50) {
+          tempAttendanceY[3] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 55) {
+          tempAttendanceY[4] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 60) {
+          tempAttendanceY[5] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 65) {
+          tempAttendanceY[6] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 70) {
+          tempAttendanceY[7] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 75) {
+          tempAttendanceY[8] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 80) {
+          tempAttendanceY[9] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 85) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 90) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 95) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        } else if (Math.round((Math.round(attendanceData[i].high - 2)) / 5) * 5 == 100) {
+          tempAttendanceY[10] += attendanceData[i].attendance;
+        }
+      }
+    }
+    allAttendanceX.push(date);
+    allAttendanceY.push(attendance.reduce(function add(a, b) { return a + b }), 0);
+    //Round datapoints to nearest integer
+    for (var i = 0; i < attendanceMarketY.length; i++) {
+      var rounded = Math.round(attendanceMarketY[i]);
+      attendanceMarketY[i] = rounded;
+    }
+    for (var i = 0; i < precipAttendanceY.length; i++) {
+      var rounded = Math.round(precipAttendanceY[i]);
+      precipAttendanceY[i] = rounded;
+    }
+    for (var i = 0; i < tempAttendanceY.length; i++) {
+      var rounded = Math.round(tempAttendanceY[i]);
+      tempAttendanceY[i] = rounded;
+    }
+
+    //Create All Attendance Graph
+    var ctx = document.getElementById('allAttendance');
+    var allAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: allAttendanceX,
+        datasets: [{
+          fill: false,
+          data: allAttendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+          spanGaps: true
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Overall Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+  
+    //Create Attendance per Market Graph
+    var ctx = document.getElementById('attendanceMarket');
+    var salesMarket = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: attendanceMarketX,
+        datasets: [{
+          fill: false,
+          data: attendanceMarketY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Attendance Per Market',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create PCFM Attendance Graph
+    var ctx = document.getElementById('pcfmAttendance');
+    var pcfmAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: PCFMattendanceX,
+        datasets: [{
+          fill: false,
+          data: PCFMattendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+          spanGaps: true
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Ponce City Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create EAV Attendance Graph
+    var ctx = document.getElementById('eavAttendance');
+    var eavAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: EAVattendanceX,
+        datasets: [{
+          fill: false,
+          data: EAVattendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+          spanGaps: true
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'East Atlanta Village Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create DFM Attendance Graph
+    var ctx = document.getElementById('dfmAttendance');
+    var dfmAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: DFMattendanceX,
+        datasets: [{
+          fill: false,
+          data: DFMattendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+          spanGaps: true
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Decatur Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create GPFM Attendance Graph
+    var ctx = document.getElementById('gpfmAttendance');
+    var gpfmAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: GPFMattendanceX,
+        datasets: [{
+          fill: false,
+          data: GPFMattendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+          spanGaps: true
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Grant Park Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              //Last 6 months as default date range
+              min: (new Date).setMonth((new Date).getMonth() - 6),
+              max: new Date()
+            },
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        },
+        zoom: {
+          enabled: true,
+          drag: false,
+          mode: 'x'
+        },
+        pan: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
+    });
+
+    //Create Precipitation vs. Attendance Graph
+    var ctx = document.getElementById('precipAttendance');
+    var precipAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: precipAttendanceX,
+        datasets: [{
+          fill: false,
+          data: precipAttendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Precipitation Probability vs. Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+
+    //Create Temperature vs. Attendance Graph
+    var ctx = document.getElementById('tempAttendance');
+    var tempAttendance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: tempAttendanceX,
+        datasets: [{
+          fill: false,
+          data: tempAttendanceY,
+          borderColor: '#2d8464',
+          backgroundColor: '#2d8464',
+        }]
+      },
+      options: {
+        animation: {
+            duration: 0
+        },
+        title: {
+          display: true,
+          text: 'Temperature vs. Attendance',
+          fontColor: 'rgba(0,0,0,0.6)',
+          fontFamily: 'Droid Serif'
+        },
+        fill: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            ticks: {
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              fontColor: 'rgba(0,0,0,0.6)',
+              fontFamily: 'Droid Serif'
+            },
+            display: true,
+          }]
+        }
+      }
+    });
+  });
+
+  //Add collapsible filtering
+  var row = document.getElementsByClassName('filter-row');
+  for (var i = 0; i < row.length; i++) {
+    row[i].addEventListener('click', function () {
+      this.classList.toggle('active');
+      var content = this.nextElementSibling;
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+      } else {
+        content.style.display = 'block';
+      }
+    });
+  }
+
+  //Add filtering actions
+  function clearAll() {
+    $('input[type="radio"]:checked').prop('checked', false);
+    updateDisplayedGraphs();
+  }
+  $('input[type="radio"]').on('change', function () {
+    updateDisplayedGraphs();
+  });
+  
+  function updateDisplayedGraphs() {
+    var checkedElements = [];
+    var allGraphs = document.getElementsByClassName('graph');
+    $("input[type='radio']:checked").each(function(){
+      checkedElements.push($(this).val());
+    });
+    if (checkedElements.every(elem => (document.getElementById('allSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('all-sales').style.display = 'block';
+    } else {
+      document.getElementById('all-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('salesMarket').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('sales-market').style.display = 'block';
+    } else {
+      document.getElementById('sales-market').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('salesVendor').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('sales-vendor').style.display = 'block';
+    } else {
+      document.getElementById('sales-vendor').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('pcfmSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('pcfm-sales').style.display = 'block';
+    } else {
+      document.getElementById('pcfm-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('pcfmVendor').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('pcfm-vendor').style.display = 'block';
+    } else {
+      document.getElementById('pcfm-vendor').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('eavVendor').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('eav-vendor').style.display = 'block';
+    } else {
+      document.getElementById('eav-vendor').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('dfmVendor').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('dfm-vendor').style.display = 'block';
+    } else {
+      document.getElementById('dfm-vendor').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('gpfmVendor').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('gpfm-vendor').style.display = 'block';
+    } else {
+      document.getElementById('gpfm-vendor').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('eavSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('eav-sales').style.display = 'block';
+    } else {
+      document.getElementById('eav-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('dfmSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('dfm-sales').style.display = 'block';
+    } else {
+      document.getElementById('dfm-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('gpfmSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('gpfm-sales').style.display = 'block';
+    } else {
+      document.getElementById('gpfm-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('precipSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('precip-sales').style.display = 'block';
+    } else {
+      document.getElementById('precip-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('tempSales').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('temp-sales').style.display = 'block';
+    } else {
+      document.getElementById('temp-sales').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('allAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('all-attendance').style.display = 'block';
+    } else {
+      document.getElementById('all-attendance').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('attendanceMarket').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('attendance-market').style.display = 'block';
+    } else {
+      document.getElementById('attendance-market').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('pcfmAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('pcfm-attendance').style.display = 'block';
+    } else {
+      document.getElementById('pcfm-attendance').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('eavAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('eav-attendance').style.display = 'block';
+    } else {
+      document.getElementById('eav-attendance').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('dfmAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('dfm-attendance').style.display = 'block';
+    } else {
+      document.getElementById('dfm-attendance').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('gpfmAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('gpfm-attendance').style.display = 'block';
+    } else {
+      document.getElementById('gpfm-attendance').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('precipAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('precip-attendance').style.display = 'block';
+    } else {
+      document.getElementById('precip-attendance').style.display = 'none';
+    }
+    if (checkedElements.every(elem => (document.getElementById('tempAttendance').getAttribute('data-category').split(' ')).indexOf(elem) > -1)) {
+      document.getElementById('temp-attendance').style.display = 'block';
+    } else {
+      document.getElementById('temp-attendance').style.display = 'none';
+    }
+  }
+</script>

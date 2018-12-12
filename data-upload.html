@@ -1,0 +1,109 @@
+<!-- Links -->
+<link rel='stylesheet' type='text/css' href='dashboard.css' />
+<link rel='stylesheet' type='text/css' href='data-upload.css' />
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="sales.json"></script>
+<script type="text/javascript" src="attendance.json"></script>
+<script type="text/javascript" src="data-upload.js"></script>
+
+<div id='header'>
+  <div class='content shadow radius-bottom'>
+    <div class='padded'>
+      <div class='outline'>
+        <div class='logo-nav'>
+          <div class='logo-nav'>
+            <h1 id='logo'>
+                <a href='https://cfmatl.org/'><img src='images/logo.png'>
+            </h1>
+          </div>
+          <nav id='navigation'>
+            <span class='menu-toggle'></span>
+            <ul class='menu sf-arrows'>
+              <li>
+                <a class='sf-with-ul' href='index.html#dashboard'>Dashboard</a>
+              </li>
+              <li>
+                <a class='sf-with-ul' href='index.html'>Graphs</a>
+              </li>
+              <li>
+                <a class='sf-with-ul' href='data-upload.html'>Upload Data</a>
+              </li>
+              <li>
+                <a class='sf-with-ul' href='support.html'>Support</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='footer'>
+  <div class='content shadow radius-top'>
+    <div class='padded'>
+      <div class='outline'>
+        <div class='row'>
+          <div class='upload-form'>
+            <div class="toggle">
+              <br>What data type are you uploading?</br>
+              <div id="saleRadio">
+                <input id="r1" class="form-radio" type="radio" name="graphs" value="SalesRadio" onchange="salesInputs()"> Sales<br>
+              </div>
+              <div id=attendanceRadio>
+                <input id="r2" class="form-radio" type="radio" name="graphs" value="AttendanceRadio" onchange="attendanceInputs()"> Attendance<br>
+              </div>
+              <br>
+            </div>
+              <form id="data-form" hidden>
+                <select id='markets' name='market' class='form-item' required>
+                  <option value='' disable selected>Market</option>
+                  <option value='EAV'>East Atlanta Village</option>
+                  <option value='DFM-W'>Decatur (Wednesday)</option>
+                  <option value='DFM-S'>Decatur (Saturday)</option>
+                  <option value='GPFM'>Grant Park</option>
+                  <option value='PCFM-S'>Poncy City</option>
+                </select><br>
+
+                <div id="vendorCategory">
+                  <select  id='vc' name='vendorCategory' class='form-item' required>
+                      <option value='' disable selected>Vendor Category</option>
+                      <option value='farmer'>Farmer</option>
+                      <option value='food'>Packaged, Processed and Prepared Food Vendor</option>
+                      <option value='non-food'>Non-Food Vendor</option>
+                    </select><br>
+                </div>
+
+                <div id="saleData">
+                  <input name='sales' id='sales' class='form-item' placeholder='Sales' required><br>
+                </div>
+                <div id="attendanceData">
+                  <input name='sales' id='attendance' class='form-item' placeholder='Attendance' required><br>
+                </div>
+                <input id='date' name='date' type ='date' class='form-item' required><br>
+                <div class='button-container'>
+                  <button type='button' class='primary-action' onclick="saveTo()">Upload Data</button>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="snackbar">Data Uploaded</div>
+<script>
+// Disable symbols and letters from Sales and Attendance input
+document.getElementById('sales').onkeypress = function (e) {
+  var chr = String.fromCharCode(e.which);
+  if ('1234567890'.indexOf(chr) < 0)
+    return false;
+};
+
+document.getElementById('attendance').onkeypress = function (e) {
+  var chr = String.fromCharCode(e.which);
+  if ('1234567890'.indexOf(chr) < 0)
+    return false;
+};
+</script>

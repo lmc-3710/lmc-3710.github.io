@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'DroidSerif-Regular';
+    src: url('fonts/droid-serif/DroidSerif-Regular.ttf');
+}
+@font-face {
+    font-family: 'Oswald-Regular';
+    src: url('fonts/oswald/Oswald-Regular.ttf');
+}
+#question {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1em;
+  font-weight: lighter;
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+#answer {
+  width: 75%;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  line-height: 1.9;
+  font-size: 0.9em;
+  color: rgba(0, 0, 0, 0.6);
+  padding-bottom: 15px;
+
+}
+.sup {
+  padding-left: 100px;
+  padding-right: 100px;
+}

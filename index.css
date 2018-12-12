@@ -1,0 +1,272 @@
+@font-face {
+    font-family: 'DroidSerif-Regular';
+    src: url('fonts/droid-serif/DroidSerif-Regular.ttf');
+}
+@font-face {
+    font-family: 'Oswald-Regular';
+    src: url('fonts/oswald/Oswald-Regular.ttf');
+}
+#footer-graphs,
+#footer-dash {
+    margin: 0px auto 0px;
+    padding: 0px;
+    bottom: 0;
+    transform: translateY(8px);
+    justify-content: center;
+}
+#footer-graphs {
+    display: none;
+}
+#footer-dash {
+    display: flex;
+}
+#footer-graphs .content,
+#footer-dash .content {
+    position: relative;
+    margin-top: 24px;
+    margin: 0px 170px 0px;
+}
+.radius-top {
+    border-radius: 12px 12px 0px 0px;
+    -moz-border-radius: 12px 12px 0px 0px;
+    -khtml-border-radius: 12px 12px 0px 0px;
+    -webkit-border-radius: 12px 12px 0px 0px;
+}
+#footer-dash .padded,
+#footer-graphs .padded  {
+    padding-bottom: 0px;
+}
+#footer-dash .outline,
+#footer-graphs .outline {
+    border-bottom: none;
+    border-radius: 6px 6px 0px 0px;
+}
+.row {
+    min-width: 1003px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 483px;
+}
+.graphs {
+    padding: 0px 12px;
+    border-bottom: 2px dotted rgba(0, 0, 0, 0.12);
+    overflow: scroll;
+    margin-left: 300px;
+}
+#allSales,
+#salesMarket,
+#PCFMsales,
+#EAVsales,
+#DFMsales,
+#GPFMsales,
+#precipSales,
+#allAttendance,
+#attendanceMarket,
+#PCFMattendance,
+#EAVattendance,
+#DFMattendance,
+#GPFMattendance,
+#precipAttendance {
+    margin-bottom: 30px;
+}
+.filter {
+    float: left;
+    width: 260px;
+    position: relative;
+    height: auto;
+    text-align: left;
+    box-sizing: border-box;
+    color: #5f450a;
+    padding-left: 15px;
+    font-family: Oswald-Regular;
+}
+.filter-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 15px 0px 12px;
+}
+#filter-clear {
+    float: right;
+    padding-top: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+    background: none;
+}
+.filter-row {
+    border-top: 1px solid rgba(95, 69, 10, 0.3);
+    cursor: pointer;
+    padding: 12px 0px 12px 0px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 75%;
+}
+.filter-row:after {
+    content: '+';
+    float: right;
+    font-weight: normal;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+}
+.filter-row.active:after {
+    content: '-';
+}
+.expanded {
+    display: none;
+    overflow: hidden;
+    padding-bottom: 12px;
+}
+.expanded.markets {
+    width: 180px
+}
+.expanded.categories {
+    width: 205px;
+}
+.expanded #checkbox {
+    font-size: 75%;
+    font-family: DroidSerif-Regular;
+    color: rgba(95, 69, 10, 0.8);
+    padding-right: 10px;
+    display: inline-block;
+}
+.expanded.markets #checkbox.next-line {
+    line-height: 35px;
+}
+.graph-div .add-icon {
+    height: 20px;
+    width: 20px;
+    float: right;
+    margin-right: 30px;
+    transform: translateY(25px);
+    background: url('images/add.png') no-repeat;
+}
+.graph-div .add-icon:hover {
+    background: url('images/add-hover.png') no-repeat;
+    cursor: pointer;
+}
+.empty {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    width: 50%;
+    font-weight: lighter;
+    line-height: 1.9;
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 50px 0px 0px 270px;
+    display: none;
+}
+.empty button {
+    border-radius: 5px;
+    font-family: 'DroidSerif-Regular';
+    height: 29px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .3), 0 2px 1px 0 rgba(0, 0, 0, .3);
+    border-style: solid;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+.empty .primary-action {
+    background-color: #2d8464;
+    margin: 0px 0px 20px 180px;
+    width: 139px;
+    border-color: #2d8464;
+    color: #fff;
+}
+.empty .primary-action:hover {
+    background-color: #3d8d70;
+    border-color: #3d8d70;
+}
+.empty .primary-action:active {
+    background-color: #4c967b;
+    border-color: #4c967b;
+}
+.dash-div .remove-icon {
+    height: 16px;
+    width: 16px;
+    float: right;
+    margin-right: 30px;
+    transform: translateY(25px);
+    background: url('images/remove.png') no-repeat;
+}
+.dash-div .remove-icon:hover {
+    background: url('images/remove-hover.png') no-repeat;
+    cursor: pointer;
+}
+.dash-div {
+    display: none;
+    width: 511px;
+    height: 280px;
+}
+#added-snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(51,51,51,0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 14px;
+    position: fixed;
+    z-index: 99;
+    left: 50%;
+    bottom: 30px;
+    font-size: 15px;
+    font-family: DroidSerif-Regular;
+}
+#added-snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -moz-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+#removed-snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(51,51,51,0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 14px;
+    position: fixed;
+    z-index: 99;
+    left: 50%;
+    bottom: 30px;
+    font-size: 15px;
+    font-family: DroidSerif-Regular;
+}
+#removed-snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -moz-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+@-moz-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+@-moz-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
