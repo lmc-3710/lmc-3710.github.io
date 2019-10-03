@@ -521,6 +521,7 @@
     DFMsalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
     GPFMsalesX.push(new Date(GPFMdate));
     GPFMsalesY.push(sales.reduce(function add(a, b) { return a + b }), 0);
+
     //Round datapoints to nearest integer
     for (var i = 0; i < salesMarketY.length; i++) {
       var rounded = Math.round(salesMarketY[i]);
@@ -591,8 +592,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(allSalesX[Object.keys(allSalesX).length - 1])).setMonth((allSalesX[Object.keys(allSalesX).length - 1]).getMonth() - 6),
+              max: new Date(allSalesX[Object.keys(allSalesX).length - 1]).setDate((allSalesX[Object.keys(allSalesX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -957,8 +958,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(PCFMsalesX[Object.keys(PCFMsalesX).length - 1])).setMonth((PCFMsalesX[Object.keys(PCFMsalesX).length - 1]).getMonth() - 6),
+              max: new Date(PCFMsalesX[Object.keys(PCFMsalesX).length - 1]).setDate((PCFMsalesX[Object.keys(PCFMsalesX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1020,8 +1021,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(EAVsalesX[Object.keys(EAVsalesX).length - 1])).setMonth((EAVsalesX[Object.keys(EAVsalesX).length - 1]).getMonth() - 6),
+              max: new Date(EAVsalesX[Object.keys(EAVsalesX).length - 1]).setDate((EAVsalesX[Object.keys(EAVsalesX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1083,8 +1084,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(DFMsalesX[Object.keys(DFMsalesX).length - 1])).setMonth((DFMsalesX[Object.keys(DFMsalesX).length - 1]).getMonth() - 6),
+              max: new Date(DFMsalesX[Object.keys(DFMsalesX).length - 1]).setDate((DFMsalesX[Object.keys(DFMsalesX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1146,8 +1147,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(GPFMsalesX[Object.keys(GPFMsalesX).length - 1])).setMonth((GPFMsalesX[Object.keys(GPFMsalesX).length - 1]).getMonth() - 6),
+              max: new Date(GPFMsalesX[Object.keys(GPFMsalesX).length - 1]).setDate((GPFMsalesX[Object.keys(GPFMsalesX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1454,8 +1455,17 @@
         }
       }
     }
-    allAttendanceX.push(date);
+    allAttendanceX.push(new Date(date));
     allAttendanceY.push(attendance.reduce(function add(a, b) { return a + b }), 0);
+    PCFMattendanceX.push(new Date(PCFMdate));
+    PCFMattendanceY.push(attendance.reduce(function add(a, b) { return a + b }), 0);
+    EAVattendanceX.push(new Date(EAVdate));
+    EAVattendanceY.push(attendance.reduce(function add(a, b) { return a + b }), 0);
+    DFMattendanceX.push(new Date(DFMdate));
+    DFMattendanceY.push(attendance.reduce(function add(a, b) { return a + b }), 0);
+    GPFMattendanceX.push(new Date(GPFMdate));
+    GPFMattendanceY.push(attendance.reduce(function add(a, b) { return a + b }), 0);
+
     //Round datapoints to nearest integer
     for (var i = 0; i < attendanceMarketY.length; i++) {
       var rounded = Math.round(attendanceMarketY[i]);
@@ -1504,8 +1514,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(allAttendanceX[Object.keys(allAttendanceX).length - 1])).setMonth((allAttendanceX[Object.keys(allAttendanceX).length - 1]).getMonth() - 6),
+              max: new Date(allAttendanceX[Object.keys(allAttendanceX).length - 1]).setDate((allAttendanceX[Object.keys(allAttendanceX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1615,8 +1625,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(PCFMattendanceX[Object.keys(PCFMattendanceX).length - 1])).setMonth((PCFMattendanceX[Object.keys(PCFMattendanceX).length - 1]).getMonth() - 6),
+              max: new Date(PCFMattendanceX[Object.keys(PCFMattendanceX).length - 1]).setDate((PCFMattendanceX[Object.keys(PCFMattendanceX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1678,8 +1688,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(EAVattendanceX[Object.keys(EAVattendanceX).length - 1])).setMonth((EAVattendanceX[Object.keys(EAVattendanceX).length - 1]).getMonth() - 6),
+              max: new Date(EAVattendanceX[Object.keys(EAVattendanceX).length - 1]).setDate((EAVattendanceX[Object.keys(EAVattendanceX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1741,8 +1751,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(DFMattendanceX[Object.keys(DFMattendanceX).length - 1])).setMonth((DFMattendanceX[Object.keys(DFMattendanceX).length - 1]).getMonth() - 6),
+              max: new Date(DFMattendanceX[Object.keys(DFMattendanceX).length - 1]).setDate((DFMattendanceX[Object.keys(DFMattendanceX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
@@ -1804,8 +1814,8 @@
             type: 'time',
             time: {
               //Last 6 months as default date range
-              min: (new Date).setMonth((new Date).getMonth() - 6),
-              max: new Date()
+              min: (new Date(GPFMattendanceX[Object.keys(GPFMattendanceX).length - 1])).setMonth((GPFMattendanceX[Object.keys(GPFMattendanceX).length - 1]).getMonth() - 6),
+              max: new Date(GPFMattendanceX[Object.keys(GPFMattendanceX).length - 1]).setDate((GPFMattendanceX[Object.keys(GPFMattendanceX).length - 1]).getDate() + 1)
             },
             display: true,
             ticks: {
